@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agregar Producto</title>
+</head>
+<body>
+    <h1>{{ mensaje }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="nombre" placeholder="Nombre del producto"><br>
+        <input type="number" name="precio" placeholder="Precio"><br>
+        <button type="submit">Agregar</button>
+    </form>
+</body>
+</html> 

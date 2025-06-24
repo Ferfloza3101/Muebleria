@@ -1,0 +1,281 @@
+/* Estilos para el template base.html */
+
+/* Dropdown de favoritos */
+.nav-fav-dropdown { 
+  position: relative; 
+  display: inline-block; 
+}
+
+.dropdown-wishlist {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  min-width: 260px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  z-index: 2000;
+  padding: 10px 0;
+  margin-top: 8px;
+}
+
+.nav-fav-dropdown:hover .dropdown-wishlist,
+.nav-fav-dropdown.active .dropdown-wishlist,
+.nav-fav-dropdown:focus-within .dropdown-wishlist {
+  display: block;
+}
+
+.wishlist-list { 
+  max-height: 320px; 
+  overflow-y: auto; 
+}
+
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.wishlist-item:hover, 
+.wishlist-item:focus {
+  background: #f5f5f5;
+  outline: none;
+}
+
+.wishlist-thumb {
+  width: 40px; 
+  height: 40px; 
+  object-fit: cover; 
+  border-radius: 4px; 
+  margin-right: 12px;
+  filter: grayscale(1) brightness(0.8);
+}
+
+.wishlist-title { 
+  flex: 1; 
+  font-size: 15px; 
+  color: #222; 
+}
+
+.wishlist-price { 
+  font-weight: bold; 
+  color: #111; 
+  margin-left: 8px; 
+}
+
+.wishlist-empty { 
+  padding: 16px; 
+  text-align: center; 
+  color: #888; 
+}
+
+.nav-fav-dropdown:focus-within .dropdown-wishlist { 
+  display: block; 
+}
+
+.nav-fav-dropdown .dropdown-wishlist a { 
+  cursor: pointer; 
+}
+
+.wishlist-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #222;
+  color: #fff;
+  font-size: 9px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  transition: opacity 0.2s, width 0.2s, height 0.2s, font-size 0.2s;
+}
+
+/* Dropdown del carrito */
+.nav-cart-dropdown { 
+  position: relative; 
+  display: inline-block; 
+}
+
+.dropdown-cart {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  min-width: 320px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  z-index: 2000;
+  padding: 10px 0;
+  margin-top: 8px;
+}
+
+.nav-cart-dropdown:hover .dropdown-cart,
+.nav-cart-dropdown.active .dropdown-cart,
+.nav-cart-dropdown:focus-within .dropdown-cart {
+  display: block;
+}
+
+.cart-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #222;
+  color: #fff;
+  font-size: 9px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  transition: opacity 0.2s, width 0.2s, height 0.2s, font-size 0.2s;
+}
+
+/* Iconos en la lista de favoritos */
+.wishlist-list i.fa-heart {
+  color: #111 !important;
+  transition: color 0.2s;
+}
+
+.wishlist-list .wishlist-item:hover i.fa-heart {
+  color: #111 !important;
+}
+
+.wishlist-list i.fa-shopping-cart {
+  color: #111 !important;
+  transition: color 0.2s;
+}
+
+.wishlist-list .wishlist-item:hover i.fa-shopping-cart {
+  color: #111 !important;
+}
+
+/* Navegación principal */
+.main-nav .nav-center ul li a {
+  color: #222;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: box-shadow 0.18s, text-shadow 0.18s, border-bottom 0.18s;
+  border-bottom: 2px solid transparent;
+}
+
+.main-nav .nav-center ul li a:hover,
+.main-nav .nav-center ul li a:focus {
+  background: none;
+  color: #222;
+  border-bottom: 2px solid #856f00;
+  box-shadow: 0 2px 8px rgba(133,111,0,0.08);
+  text-shadow: 0 1px 2px rgba(133,111,0,0.10);
+}
+
+/* Formulario de búsqueda */
+.search-form {
+  display: none;
+  margin-left: 24px;
+  position: relative;
+  width: 260px;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #222;
+  color: #222;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+  padding: 6px 0;
+}
+
+.search-submit {
+  display: none;
+}
+
+/* Modal de productos */
+.product-modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 800px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.close-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.loading-spinner i {
+  margin-right: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .search-form {
+    width: 200px;
+    margin-left: 12px;
+  }
+  
+  .dropdown-wishlist,
+  .dropdown-cart {
+    min-width: 280px;
+  }
+  
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+  }
+} 

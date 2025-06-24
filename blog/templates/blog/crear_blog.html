@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Blog</title>
+</head>
+<body>
+    <h1>{{ mensaje }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="titulo" placeholder="Título"><br>
+        <textarea name="contenido" placeholder="Contenido"></textarea><br>
+        <button type="submit">Crear</button>
+    </form>
+</body>
+</html> 

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eliminar Blog</title>
+</head>
+<body>
+    <h1>{{ mensaje }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar Eliminación</button>
+    </form>
+    <a href="/blog/">Cancelar</a>
+</body>
+</html> 

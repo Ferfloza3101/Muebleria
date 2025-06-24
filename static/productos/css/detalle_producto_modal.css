@@ -1,0 +1,24 @@
+/*
+ Estilos para el modal de detalle de producto, incluyendo botones de wishlist, stock, cantidad y acciones.
+*/
+
+.modal-wishlist-btn.active i { color: #b85c38 !important; }
+.modal-wishlist-btn i { transition: color 0.2s; }
+.modal-wishlist-btn:hover i { color: #b85c38; }
+.modal-stock { margin-bottom: 12px; color: #555555; }
+.input-cantidad {
+  width: 60px;
+  padding: 4px 8px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-left: 8px;
+  text-align: center;
+}
+.modal-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  justify-content: center;
+} 
