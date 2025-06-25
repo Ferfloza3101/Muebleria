@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Blog</title>
+</head>
+<body>
+    <h1>{{ mensaje }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="titulo" value="{{ blog.titulo }}" placeholder="Título"><br>
+        <textarea name="contenido" placeholder="Contenido">{{ blog.contenido }}</textarea><br>
+        <button type="submit">Guardar Cambios</button>
+    </form>
+</body>
+</html> 

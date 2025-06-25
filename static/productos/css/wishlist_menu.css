@@ -1,0 +1,20 @@
+/*
+ Estilos para el menú desplegable de favoritos (wishlist), incluyendo la lista de productos y botones de acción.
+*/
+
+.wishlist-item-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wishlist-remove-btn, .wishlist-cart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  color: #b85c38;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+.wishlist-remove-btn:hover { color: #e74c3c; }
+.wishlist-cart-btn:hover { color: #2ecc71; } 

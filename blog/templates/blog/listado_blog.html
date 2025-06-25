@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listado de Blogs</title>
+</head>
+<body>
+    <h1>{{ mensaje }}</h1>
+    <ul>
+        {% for blog in blogs %}
+            <li>{{ blog }}</li>
+        {% empty %}
+            <li>No hay blogs disponibles.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

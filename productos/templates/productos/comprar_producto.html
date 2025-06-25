@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comprar Producto</title>
+</head>
+<body>
+    <h1>{{ mensaje }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Comprar</button>
+    </form>
+    <a href="/productos/">Cancelar</a>
+</body>
+</html> 

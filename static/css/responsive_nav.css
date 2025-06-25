@@ -1,0 +1,404 @@
+/*
+Estilos responsive para la navbar.
+Solo CSS para adaptar la navbar a diferentes tamaños de pantalla.
+*/
+
+/* Contenedor principal de la navbar */
+.main-nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0 20px;
+}
+
+/* Sección izquierda */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+/* Logo responsive */
+.logo {
+  max-height: 50px;
+  width: auto;
+  transition: max-height 0.3s ease;
+}
+
+/* Formulario de búsqueda */
+.search-form {
+  display: none;
+  margin-left: 24px;
+  position: relative;
+  width: 260px;
+  transition: width 0.3s ease;
+}
+
+/* Sección central del menú */
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-center ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-center ul li a {
+  color: #222;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.nav-center ul li a:hover,
+.nav-center ul li a:focus {
+  background: none;
+  color: #222;
+  border-bottom: 2px solid #856f00;
+  box-shadow: 0 2px 8px rgba(133,111,0,0.08);
+  text-shadow: 0 1px 2px rgba(133,111,0,0.10);
+}
+
+/* Sección derecha */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-icon:hover {
+  background-color: rgba(133, 111, 0, 0.1);
+}
+
+.nav-icon i {
+  font-size: 16px;
+  color: #222;
+}
+
+/* Breakpoints responsive */
+
+/* Tablet grande */
+@media (max-width: 1200px) {
+  .main-nav .container {
+    padding: 0 15px;
+  }
+  
+  .nav-center ul {
+    gap: 12px;
+  }
+  
+  .nav-center ul li a {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  
+  .logo {
+    max-height: 45px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .main-nav .container {
+    padding: 0 12px;
+  }
+  
+  .nav-center ul {
+    gap: 8px;
+  }
+  
+  .nav-center ul li a {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  
+  .nav-right {
+    gap: 8px;
+  }
+  
+  .nav-icon {
+    min-width: 36px;
+    height: 36px;
+  }
+  
+  .nav-icon i {
+    font-size: 14px;
+  }
+  
+  .logo {
+    max-height: 40px;
+  }
+}
+
+/* Tablet pequeña */
+@media (max-width: 900px) {
+  .nav-center ul {
+    gap: 6px;
+  }
+  
+  .nav-center ul li a {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .nav-right {
+    gap: 6px;
+  }
+  
+  .nav-icon {
+    min-width: 32px;
+    height: 32px;
+  }
+  
+  .nav-icon i {
+    font-size: 13px;
+  }
+  
+  .logo {
+    max-height: 35px;
+  }
+}
+
+/* Móvil grande */
+@media (max-width: 768px) {
+  .main-nav .container {
+    padding: 0 10px;
+    gap: 10px;
+  }
+  
+  .nav-left {
+    gap: 15px;
+  }
+  
+  .nav-center {
+    order: 3;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .nav-center ul {
+    gap: 4px;
+    justify-content: center;
+  }
+  
+  .nav-center ul li a {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+  
+  .nav-right {
+    gap: 4px;
+  }
+  
+  .nav-icon {
+    min-width: 28px;
+    height: 28px;
+  }
+  
+  .nav-icon i {
+    font-size: 12px;
+  }
+  
+  .logo {
+    max-height: 30px;
+  }
+  
+  /* Ajustar badges */
+  .wishlist-badge,
+  .cart-badge {
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+  }
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .main-nav .container {
+    padding: 0 8px;
+    gap: 8px;
+  }
+  
+  .nav-left {
+    gap: 10px;
+  }
+  
+  .nav-center ul {
+    gap: 2px;
+  }
+  
+  .nav-center ul li a {
+    padding: 2px 4px;
+    font-size: 9px;
+  }
+  
+  .nav-right {
+    gap: 3px;
+  }
+  
+  .nav-icon {
+    min-width: 26px;
+    height: 26px;
+  }
+  
+  .nav-icon i {
+    font-size: 11px;
+  }
+  
+  .logo {
+    max-height: 28px;
+  }
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+  .main-nav .container {
+    padding: 0 5px;
+    gap: 5px;
+  }
+  
+  .nav-left {
+    gap: 8px;
+  }
+  
+  .nav-center ul {
+    gap: 1px;
+  }
+  
+  .nav-center ul li a {
+    padding: 1px 3px;
+    font-size: 8px;
+  }
+  
+  .nav-right {
+    gap: 2px;
+  }
+  
+  .nav-icon {
+    min-width: 24px;
+    height: 24px;
+  }
+  
+  .nav-icon i {
+    font-size: 10px;
+  }
+  
+  .logo {
+    max-height: 25px;
+  }
+  
+  /* Badges más pequeños */
+  .wishlist-badge,
+  .cart-badge {
+    width: 10px;
+    height: 10px;
+    font-size: 7px;
+  }
+}
+
+/* Móvil muy pequeño */
+@media (max-width: 360px) {
+  .nav-center ul li a {
+    font-size: 7px;
+    padding: 1px 2px;
+  }
+  
+  .nav-icon {
+    min-width: 22px;
+    height: 22px;
+  }
+  
+  .nav-icon i {
+    font-size: 9px;
+  }
+  
+  .logo {
+    max-height: 22px;
+  }
+}
+
+/* Asegurar que los dropdowns se adapten */
+@media (max-width: 768px) {
+  .dropdown-wishlist,
+  .dropdown-cart,
+  .dropdown-profile {
+    min-width: 250px;
+    max-width: 90vw;
+  }
+  
+  .dropdown-wishlist {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .dropdown-cart {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .dropdown-profile {
+    right: 0;
+    left: auto;
+    transform: none;
+  }
+}
+
+/* Mejorar accesibilidad en dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .nav-icon {
+    min-width: 44px;
+    height: 44px;
+  }
+  
+  .nav-center ul li a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Asegurar que el texto no se corte */
+.nav-center ul li a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+@media (max-width: 768px) {
+  .nav-center ul li a {
+    max-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-center ul li a {
+    max-width: 60px;
+  }
+} 

@@ -1,0 +1,49 @@
+{% comment %}
+Template base para formularios
+Uso: {% extends 'forms/base_form.html' %}
+{% endcomment %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block form_title %}{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"/>
+    
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">{% block form_heading %}{% endblock %}</h1>
+        
+        {% if mensaje %}
+            <div class="form-error">{{ mensaje }}</div>
+        {% endif %}
+        
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% block form_content %}{% endblock %}
+            
+            <button type="submit" class="form-button {% block form_button_class %}{% endblock %}">
+                {% block form_button_text %}Enviar{% endblock %}
+            </button>
+        </form>
+        
+        {% block form_links %}{% endblock %}
+    </div>
+    
+    <!-- Scripts principales -->
+    <script src="{% static 'js/config.js' %}"></script>
+    <script src="{% static 'js/components.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

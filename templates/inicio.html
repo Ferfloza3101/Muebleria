@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inicio | Mueblería en Línea{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="stylesheet" href="{% static 'productos/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'productos/css/carrusel.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Carrusel de productos -->
+<div class="hero-carousel swiper">
+    <div class="swiper-wrapper">
+        {% for producto in productos_carrusel %}
+        <div class="swiper-slide">
+            <div class="slide-content">
+                <img src="{{ producto.imagen_principal.url }}" 
+                     alt="{{ producto.nombre }}" 
+                     class="slide-image">
+                <div class="slide-info">
+                    <h2>{{ producto.nombre }}</h2>
+                    <p>{{ producto.descripcion|truncatewords:30 }}</p>
+                    <div class="slide-price">
+                        {% if producto.oferta_activa and producto.precio_oferta %}
+                            <span class="original">${{ producto.precio }}</span>
+                            <span class="offer">${{ producto.precio_oferta }}</span>
+                        {% else %}
+                            <span>${{ producto.precio }}</span>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'productos:lista_productos' %}" 
+                       class="slide-button" 
+                       data-product-id="{{ producto.id }}">
+                        Ver Producto
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Navegación -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <!-- Paginación -->
+    <div class="swiper-pagination"></div>
+</div>
+
+<!-- Modales de productos -->
+{% for producto in productos_carrusel %}
+    {% include 'forms/modal_base.html' with producto=producto %}
+{% endfor %}
+
+<div class="container">
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="{% static 'productos/js/carrusel.js' %}"></script>
+<script src="{% static 'productos/js/modal_producto.js' %}"></script>
+{% endblock %} 

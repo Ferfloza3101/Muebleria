@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}{{ producto.nombre }} | Detalle{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'productos/css/detalle_producto.css' %}">
+{% endblock %}
+{% block content %}
+<div class="product-card product-card-detalle" data-product-id="{{ producto.id }}">
+  <div class="product-image-wrapper">
+    <button class="detalle-arrow prev-arrow" onclick="cambiarImagen(-1)"><i class="fas fa-chevron-left"></i></button>
+    <img id="detalle-imagen" src="{% if imagenes and imagenes.0 %}{{ imagenes.0.imagen.url }}{% else %}{{ producto.imagen_principal.url }}{% endif %}" alt="{{ producto.nombre }}" class="product-image">
+    <button class="detalle-arrow next-arrow" onclick="cambiarImagen(1)"><i class="fas fa-chevron-right"></i></button>
+    <div class="icon-group" onclick="event.stopPropagation();">
+      <button class="action-btn wishlist-btn{% if wishlist_ids and producto.id in wishlist_ids %} active{% endif %}" data-product-id="{{ producto.id }}" title="Agregar a favoritos">
+        <i class="fa{% if wishlist_ids and producto.id in wishlist_ids %}s{% else %}r{% endif %} fa-heart"></i>
+      </button>
+      <button class="action-btn cart-btn" data-product-id="{{ producto.id }}" title="Agregar al carrito">
+        <i class="fas fa-shopping-cart"></i>
+      </button>
+    </div>
+  </div>
+  <div class="image-dots">
+    {% for img in imagenes %}
+      <span class="dot{% if forloop.first %} active{% endif %}" onclick="seleccionarImagen({{ forloop.counter0 }})"></span>
+    {% empty %}
+      <span class="dot active"></span>
+    {% endfor %}
+  </div>
+  <h3 class="product-name">{{ producto.nombre }}</h3>
+  <p class="product-category">{{ producto.categoria.nombre }}</p>
+  <div class="product-description">{{ producto.descripcion|linebreaks }}</div>
+  <div class="product-pricing">
+    {% if producto.oferta_activa and producto.precio_oferta and producto.precio_oferta < producto.precio %}
+      <span class="original-price">${{ producto.precio|floatformat:2 }}</span>
+      <span class="sale-price">${{ producto.precio_oferta|floatformat:2 }}</span>
+    {% else %}
+      <span class="price">${{ producto.precio|floatformat:2 }}</span>
+    {% endif %}
+  </div>
+  <div class="product-stock">Stock disponible: <b>{{ stock }}</b></div>
+  <div class="detalle-cantidad">
+    <label for="cantidad-detalle-{{ producto.id }}">Cantidad:</label>
+    <input type="number" id="cantidad-detalle-{{ producto.id }}" class="input-cantidad" min="1" max="{{ stock }}" value="1">
+  </div>
+</div>
+{% block extra_js %}
+<script>
+window.imagenesDetalleProducto = [{% for img in imagenes %}'{{ img.imagen.url }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
+window.imagenPrincipalDetalle = '{{ producto.imagen_principal.url }}';
+</script>
+<script src="{% static 'productos/js/detalle_producto.js' %}"></script>
+{% endblock %}
+{% endblock %}

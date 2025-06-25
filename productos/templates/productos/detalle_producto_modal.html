@@ -1,0 +1,43 @@
+{% load static %}
+{# Template para el contenido del modal que se carga por AJAX #}
+<div class="modal-gallery">
+    <div class="modal-image-wrapper">
+        <i class="fas fa-chevron-left modal-nav-arrow prev-arrow"></i>
+        <img src="{{ producto.imagen_principal.url }}"
+             alt="{{ producto.nombre }}"
+             class="modal-product-image"
+             data-images='[{"url":"{{ producto.imagen_principal.url }}"}{% for img in producto.imagenes %}{% if img.imagen.url != producto.imagen_principal.url %}, {"url":"{{ img.imagen.url }}"}{% endif %}{% endfor %}]'
+             data-current-image="0">
+        <i class="fas fa-chevron-right modal-nav-arrow next-arrow"></i>
+    </div>
+    <div class="modal-image-dots"></div>
+</div>
+<div class="modal-info">
+    <h2 class="modal-product-name">{{ producto.nombre }}</h2>
+    <p class="modal-product-category">{{ producto.categoria.nombre }}</p>
+    <div class="modal-product-description">
+        {{ producto.descripcion|linebreaks }}
+    </div>
+    <div class="modal-product-pricing">
+        {% if producto.oferta_activa and producto.precio_oferta and producto.precio_oferta < producto.precio %}
+            <span class="modal-original-price">${{ producto.precio|floatformat:2 }}</span>
+            <span class="modal-sale-price">${{ producto.precio_oferta|floatformat:2 }}</span>
+        {% else %}
+            <span class="modal-price">${{ producto.precio|floatformat:2 }}</span>
+        {% endif %}
+    </div>
+    <div class="modal-stock">Stock disponible: <b>{{ stock }}</b></div>
+    <div class="modal-cantidad">
+      <label for="cantidad-modal-{{ producto.id }}">Cantidad:</label>
+      <input type="number" id="cantidad-modal-{{ producto.id }}" class="input-cantidad" min="1" max="{{ stock }}" value="1">
+    </div>
+    <div class="modal-actions">
+        <button class="modal-wishlist-btn{% if wishlist_ids and producto.id in wishlist_ids %} active{% endif %}" data-product-id="{{ producto.id }}">
+            <i class="fa{% if wishlist_ids and producto.id in wishlist_ids %}s{% else %}r{% endif %} fa-heart"></i> Agregar a tu Wishlist
+        </button>
+        <button class="modal-cart-btn cart-btn" data-product-id="{{ producto.id }}">
+            <i class="fas fa-shopping-cart"></i> Agregar al carrito
+        </button>
+    </div>
+</div>
+<link rel="stylesheet" href="{% static 'productos/css/detalle_producto_modal.css' %}"> 
