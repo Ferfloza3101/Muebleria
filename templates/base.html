@@ -151,10 +151,8 @@
     </div>
   </nav>
 
-  <!-- Bloque para contenido adicional de navegación si es necesario -->
   {% block nav %}{% endblock %}
   
-  <!-- Bloque principal para el contenido -->
   <main>
     <div class="container">
       {% block content %}
@@ -191,7 +189,6 @@
   <script src="{% static 'productos/js/nav_cart_wishlist.js' %}"></script>
   <script src="{% static 'productos/js/modal.js' %}"></script>
   
-  <!-- Scripts adicionales específicos -->
   {% block extra_js %}{% endblock %}
 </body>
 </html>

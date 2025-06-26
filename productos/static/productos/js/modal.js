@@ -1,4 +1,4 @@
-// Funciones del modal
+    // Funciones del modal
 function openProductModal(id) {
     console.log('Opening modal for product:', id);
     const modal = document.getElementById(`modal-${id}`);
@@ -144,7 +144,6 @@ async function updateWishlistMenu() {
             const data = await res.json();
             if (data.ok) {
                 await updateCartMenu();
-                // Feedback visual
                 document.querySelectorAll(`.cart-btn[data-product-id="${productId}"]`).forEach(b => toggleCartButton(b, true));
                 document.querySelectorAll(`.modal-cart-btn[data-product-id="${productId}"]`).forEach(b => toggleCartButton(b, true));
                 mostrarMensajeCarrito('El producto se ha agregado al carrito');
@@ -223,7 +222,6 @@ async function removeFromCart(productId) {
     });
     const data = await res.json();
     if (!data.ok) alert(data.error || 'No se pudo eliminar del carrito');
-    // Feedback visual: desactivar iconos
     document.querySelectorAll(`.cart-btn[data-product-id="${productId}"]`).forEach(b => toggleCartButton(b, false));
     document.querySelectorAll(`.modal-cart-btn[data-product-id="${productId}"]`).forEach(b => toggleCartButton(b, false));
 }

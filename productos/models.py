@@ -23,6 +23,7 @@ class Producto(models.Model):
     activo = models.BooleanField(default=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, related_name='productos')
     imagen_principal = models.ImageField(upload_to='productos/', null=False, blank=False, default='productos/default.jpg')
+    ventas = models.PositiveIntegerField(default=0, help_text='Cantidad de veces que este producto ha sido vendido')
 
     def __str__(self):
         return self.nombre

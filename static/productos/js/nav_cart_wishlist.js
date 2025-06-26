@@ -1,6 +1,4 @@
-/*
- Controla la interacción de los menús de favoritos (wishlist), carrito y barra de búsqueda en la navegación principal. Incluye eventos de hover, clic y cierre automático.
-*/
+/*Controla la interacción de los menús de favoritos (wishlist), carrito y barra de búsqueda en la navegación principal.*/
 
 document.addEventListener('DOMContentLoaded', function() {
   // Wishlist
@@ -83,48 +81,133 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-  // Función para obtener el CSRF token desde meta
-  function getCSRFToken() {
-    const meta = document.querySelector('meta[name="csrf-token"]');
-    return meta ? meta.getAttribute('content') : '';
-  }
-  // Lógica para los botones + y - del carrito
-  document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('cart-qty-plus')) {
-      e.preventDefault();
-      const productId = e.target.getAttribute('data-product-id');
-      fetch(`/productos/carrito/add/${productId}/`, {
+  // Lógica para aumentar/disminuir cantidad en el menú de carrito
+  document.querySelectorAll('.cart-qty-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const item = btn.closest('.cart-item-row');
+      const cantidadSpan = item.querySelector('.cart-qty');
+      const productoId = btn.dataset.productId;
+      const action = btn.classList.contains('cart-qty-plus') ? 'increase' : 'decrease';
+      if (action === 'increase') {
+        fetch(`/productos/carrito/add/${productoId}/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCSRFToken(),
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          credentials: 'same-origin',
+          body: 'cantidad=1',
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.ok) {
+            let cantidad = parseInt(cantidadSpan.textContent);
+            cantidad++;
+            cantidadSpan.textContent = cantidad;
+          } else {
+            alert(data.error || 'No se pudo aumentar la cantidad.');
+          }
+        })
+        .catch(() => {
+          alert('Error al aumentar la cantidad.');
+        });
+      } else if (action === 'decrease') {
+        fetch(`/productos/carrito/decrease/${productoId}/`, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': getCSRFToken(),
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          credentials: 'same-origin',
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.ok) {
+            let cantidad = parseInt(cantidadSpan.textContent);
+            if (cantidad > 1) {
+              cantidad--;
+              cantidadSpan.textContent = cantidad;
+            } else {
+              item.remove();
+            }
+          } else {
+            alert(data.error || 'No se pudo disminuir la cantidad.');
+          }
+        })
+        .catch(() => {
+          alert('Error al disminuir la cantidad.');
+        });
+      }
+    });
+  });
+
+  // Lógica para eliminar producto en el menú de carrito
+  document.querySelectorAll('.cart-remove-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const item = btn.closest('.cart-item-row');
+      const productoId = btn.dataset.productId;
+      fetch(`/productos/carrito/remove/${productoId}/`, {
         method: 'POST',
         headers: {
           'X-CSRFToken': getCSRFToken(),
           'X-Requested-With': 'XMLHttpRequest',
         },
-        body: new URLSearchParams({cantidad: 1})
+        credentials: 'same-origin',
       })
-      .then(r => r.json())
-      .then(() => recargarCarritoMenu());
-    }
-    if (e.target.classList.contains('cart-qty-minus')) {
-      e.preventDefault();
-      const productId = e.target.getAttribute('data-product-id');
-      fetch(`/productos/carrito/decrease/${productId}/`, {
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          item.remove();
+        } else {
+          alert(data.error || 'No se pudo eliminar el producto.');
+        }
+      })
+      .catch(() => {
+        alert('Error al eliminar el producto.');
+      });
+    });
+  });
+
+  // Lógica para vaciar carrito en el menú de carrito
+  const vaciarBtn = document.querySelector('.cart-clear-btn');
+  if (vaciarBtn) {
+    vaciarBtn.addEventListener('click', function() {
+      fetch('/productos/carrito/clear/', {
         method: 'POST',
         headers: {
           'X-CSRFToken': getCSRFToken(),
           'X-Requested-With': 'XMLHttpRequest',
+        },
+        credentials: 'same-origin',
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          document.querySelectorAll('.cart-item-row').forEach(item => item.remove());
+        } else {
+          alert('No se pudo vaciar el carrito.');
         }
       })
-      .then(r => r.json())
-      .then(() => recargarCarritoMenu());
-    }
-  });
-
-  function recargarCarritoMenu() {
-    fetch('/productos/carrito/menu/')
-      .then(r => r.text())
-      .then(html => {
-        const cartMenu = document.querySelector('.dropdown-cart');
-        if (cartMenu) cartMenu.innerHTML = html;
+      .catch(() => {
+        alert('Error al vaciar el carrito.');
       });
+    });
   }
-}); 
+});
+
+// Función para obtener el token CSRF de la cookie
+function getCSRFToken() {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, 10) === ('csrftoken=')) {
+        cookieValue = decodeURIComponent(cookie.substring(10));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+} 

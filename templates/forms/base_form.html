@@ -1,6 +1,5 @@
 {% comment %}
-Template base para formularios
-Uso: {% extends 'forms/base_form.html' %}
+Template base para nuestros formularios
 {% endcomment %}
 
 {% load static %}
@@ -11,39 +10,26 @@ Uso: {% extends 'forms/base_form.html' %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block form_title %}{% endblock %}</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"/>
-    
-    <!-- Estilos principales -->
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'usuarios/css/form_minimal.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <div class="form-container">
-        <h1 class="form-title">{% block form_heading %}{% endblock %}</h1>
-        
+    <div class="form-minimal-container">
+        <h1 class="form-minimal-title">{% block form_heading %}{% endblock %}</h1>
         {% if mensaje %}
-            <div class="form-error">{{ mensaje }}</div>
+            <div class="form-minimal-error">{{ mensaje }}</div>
         {% endif %}
-        
-        <form method="post" class="form">
+        <form method="post" class="form-minimal">
             {% csrf_token %}
             {% block form_content %}{% endblock %}
-            
-            <button type="submit" class="form-button {% block form_button_class %}{% endblock %}">
+            <button type="submit" class="form-minimal-btn">
                 {% block form_button_text %}Enviar{% endblock %}
             </button>
         </form>
-        
+        <div class="form-minimal-links">
         {% block form_links %}{% endblock %}
+        </div>
     </div>
-    
-    <!-- Scripts principales -->
-    <script src="{% static 'js/config.js' %}"></script>
-    <script src="{% static 'js/components.js' %}"></script>
-    
     {% block extra_js %}{% endblock %}
 </body>
 </html> 

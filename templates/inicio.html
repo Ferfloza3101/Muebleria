@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="stylesheet" href="{% static 'productos/css/styles.css' %}">
 <link rel="stylesheet" href="{% static 'productos/css/carrusel.css' %}">
+<link rel="stylesheet" href="{% static 'css/home_products_grid.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -52,6 +53,82 @@
     {% include 'forms/modal_base.html' with producto=producto %}
 {% endfor %}
 
+<!-- Grid de productos destacados -->
+<section class="home-products-grid">
+    <!-- Tarjeta 1: Texto fijo -->
+    <div class="home-product-card home-green-bg">
+        <div class="home-product-info">
+            <h2>OUTDOOR<br>FURNITURE<br>SYDNEY</h2>
+            <a href="{% url 'productos:lista_productos' %}">VER DETALLES &rarr;</a>
+        </div>
+    </div>
+    <!-- Tarjeta 2: Imagen de producto real -->
+    {% if productos_grid.0 %}
+    <div class="home-product-card open-modal-btn" data-product-id="{{ productos_grid.0.id }}">
+        <img src="{{ productos_grid.0.imagen_principal.url }}" alt="{{ productos_grid.0.nombre }}">
+    </div>
+    {% endif %}
+    <!-- Tarjeta 3: Texto fijo -->
+    <div class="home-product-card home-blue-bg">
+        <div class="home-product-info">
+            <h2>DESIGN BY<br>UMBRA<br>MODERN 2015</h2>
+            <a href="{% url 'productos:lista_productos' %}">VER DETALLES &rarr;</a>
+        </div>
+    </div>
+    <!-- Tarjeta 4: Imagen de producto real -->
+    {% if productos_grid.1 %}
+    <div class="home-product-card home-blue-bg open-modal-btn" data-product-id="{{ productos_grid.1.id }}">
+        <img src="{{ productos_grid.1.imagen_principal.url }}" alt="{{ productos_grid.1.nombre }}">
+    </div>
+    {% endif %}
+    <!-- Tarjeta 5: Imagen de producto real -->
+    {% if productos_grid.2 %}
+    <div class="home-product-card home-green-bg open-modal-btn" data-product-id="{{ productos_grid.2.id }}">
+        <img src="{{ productos_grid.2.imagen_principal.url }}" alt="{{ productos_grid.2.nombre }}">
+    </div>
+    {% endif %}
+    <!-- Tarjeta 6: Texto fijo -->
+    <div class="home-product-card home-gray-bg">
+        <div class="home-product-info">
+            <h2>CERAMICS<br>JOSH<br>HERMAN</h2>
+            <a href="{% url 'productos:lista_productos' %}">VER DETALLES &rarr;</a>
+        </div>
+    </div>
+    <!-- Tarjeta 7: Imagen de producto real -->
+    {% if productos_grid.3 %}
+    <div class="home-product-card home-gray-bg open-modal-btn" data-product-id="{{ productos_grid.3.id }}">
+        <img src="{{ productos_grid.3.imagen_principal.url }}" alt="{{ productos_grid.3.nombre }}">
+    </div>
+    {% endif %}
+    <!-- Tarjeta 8: Imagen de producto real -->
+    {% if productos_grid.4 %}
+    <div class="home-product-card open-modal-btn" data-product-id="{{ productos_grid.4.id }}">
+        <img src="{{ productos_grid.4.imagen_principal.url }}" alt="{{ productos_grid.4.nombre }}">
+    </div>
+    {% endif %}
+</section>
+
+<!-- Modales de productos del grid -->
+{% for producto in productos_grid %}
+    {% include 'forms/modal_base.html' with producto=producto %}
+{% endfor %}
+
+<!-- Top Productos -->
+<div class="top-products-section" style="margin-top: 48px;">
+    <h2 class="top-products-title" style="font-size:2.8rem; font-weight:700; margin-bottom:0; text-align:center;">Top Productos</h2>
+    <div class="top-products-subtitle" style="color:#888; font-size:1.4rem; margin-bottom: 2.2rem; text-align:center;">Lo mejor de 2025</div>
+    <div class="top-products-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; max-width:1200px; margin:0 auto;">
+        {% for producto in top_productos %}
+            {% include 'productos/tarjeta_producto.html' with producto=producto wishlist_ids=wishlist_ids %}
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modales de productos top -->
+{% for producto in top_productos %}
+    {% include 'forms/modal_base.html' with producto=producto %}
+{% endfor %}
+
 <div class="container">
 
 </div>
@@ -61,4 +138,5 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="{% static 'productos/js/carrusel.js' %}"></script>
 <script src="{% static 'productos/js/modal_producto.js' %}"></script>
+<script src="{% static 'js/home_products_grid.js' %}"></script>
 {% endblock %} 

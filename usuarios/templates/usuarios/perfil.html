@@ -1,11 +1,169 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Perfil de Usuario</title>
-</head>
-<body>
-    <h1>{{ mensaje }}</h1>
-    <p>Usuario: {{ usuario.username }}</p>
-    <a href="{% url 'login:logout' %}">Cerrar Sesión</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="perfil-layout">
+
+    <nav class="perfil-sidebar" id="perfilSidebar">
+        <ul class="perfil-sidebar__menu">
+            <li>
+                <a href="#info-personal" class="perfil-sidebar__link" data-section="info-personal" data-tooltip="Perfil">
+                    <i class="fas fa-user"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#pedidos" class="perfil-sidebar__link" data-section="pedidos" data-tooltip="Pedidos">
+                    <i class="fas fa-box"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#direcciones" class="perfil-sidebar__link" data-section="direcciones" data-tooltip="Direcciones">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#metodos-pago" class="perfil-sidebar__link" data-section="metodos-pago" data-tooltip="Métodos de Pago">
+                    <i class="fas fa-credit-card"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#seguridad" class="perfil-sidebar__link" data-section="seguridad" data-tooltip="Seguridad">
+                    <i class="fas fa-lock"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#contacto" class="perfil-sidebar__link" data-section="contacto" data-tooltip="Contacto">
+                    <i class="fas fa-headset"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="perfil-sidebar__footer">
+            <a href="/" class="perfil-sidebar__footer-link" data-tooltip="Inicio"><i class="fas fa-home"></i></a>
+            <a href="{% url 'login:logout' %}" class="perfil-sidebar__footer-link perfil-sidebar__footer-link--logout" data-tooltip="Salir"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </nav>
+    <div class="perfil-drawer-overlay" id="perfilDrawerOverlay"></div>
+    <button class="perfil-drawer-toggle" id="perfilDrawerToggle" aria-label="Abrir menú de perfil">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Contenido de mi perfil -->
+    <div class="perfil-content">
+        <div class="perfil-section-view" id="view-info-personal">
+            <h2>Información Personal</h2>
+            <div class="perfil-section__header">Hola, {{ usuario.first_name|default:usuario.username }} </div>
+            <form id="form-info-personal" method="post" action="{% url 'usuarios:editar_usuario' usuario.id %}">
+                {% csrf_token %}
+                <div class="perfil-form-row">
+                    <label for="first_name">Nombre</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ usuario.first_name }}">
+                </div>
+                <div class="perfil-form-row">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ usuario.email }}">
+                </div>
+                <div class="perfil-form-row">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" id="telefono" name="telefono" value="{{ usuario.perfil.telefono }}">
+                </div>
+                <div class="perfil-form-row">
+                    <label for="direccion">Dirección principal</label>
+                    <input type="text" id="direccion" name="direccion" value="{{ usuario.perfil.direccion }}">
+                </div>
+                <button type="submit" class="perfil-btn">Guardar Cambios</button>
+            </form>
+        </div>
+        <div class="perfil-section-view" id="view-pedidos">
+            <h2>Historial de Pedidos</h2>
+            <div class="perfil-placeholder" id="pedidos-placeholder">No tienes pedidos aún.</div>
+        </div>
+        <div class="perfil-section-view" id="view-direcciones">
+            <h2>Direcciones y Agenda de Envíos</h2>
+            <div id="direcciones-lista">
+                <div class="perfil-placeholder">No tienes direcciones guardadas.</div>
+            </div>
+            <form id="form-direccion" autocomplete="off">
+                <div class="perfil-form-row">
+                    <label for="dir-nombre">Nombre completo</label>
+                    <input type="text" id="dir-nombre" name="nombre" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="dir-calle">Calle</label>
+                    <input type="text" id="dir-calle" name="calle" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="dir-numero">Número</label>
+                    <input type="text" id="dir-numero" name="numero" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="dir-colonia">Colonia</label>
+                    <input type="text" id="dir-colonia" name="colonia" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="dir-ciudad">Ciudad</label>
+                    <input type="text" id="dir-ciudad" name="ciudad" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="dir-estado">Estado</label>
+                    <input type="text" id="dir-estado" name="estado" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="dir-cp">Código Postal</label>
+                    <input type="text" id="dir-cp" name="cp" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="dir-telefono">Teléfono</label>
+                    <input type="text" id="dir-telefono" name="telefono" required>
+                </div>
+                <button type="submit" class="perfil-btn">Agregar Dirección</button>
+            </form>
+            <div id="direccion-exito" class="perfil-placeholder" style="display:none; color:#111; background:#e8f5e9; margin-top:12px;">¡Dirección guardada!</div>
+        </div>
+        <div class="perfil-section-view" id="view-metodos-pago">
+            <h2>Métodos de Pago</h2>
+            <div id="pagos-lista">
+                <div class="perfil-placeholder">No tienes métodos de pago guardados.</div>
+            </div>
+            <form id="form-pago" autocomplete="off">
+                <div class="perfil-form-row">
+                    <label for="pago-nombre">Nombre en la tarjeta</label>
+                    <input type="text" id="pago-nombre" name="nombre" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="pago-numero">Número de tarjeta</label>
+                    <input type="text" id="pago-numero" name="numero" maxlength="19" required pattern="[0-9 ]+">
+                </div>
+                <div class="perfil-form-row">
+                    <label for="pago-vencimiento">Vencimiento (MM/AA)</label>
+                    <input type="text" id="pago-vencimiento" name="vencimiento" maxlength="5" placeholder="MM/AA" required pattern="[0-9/]+">
+                </div>
+                <div class="perfil-form-row">
+                    <label for="pago-cvc">CVC</label>
+                    <input type="text" id="pago-cvc" name="cvc" maxlength="4" required pattern="[0-9]+">
+                </div>
+                <button type="submit" class="perfil-btn">Agregar Método de Pago</button>
+            </form>
+            <div id="pago-exito" class="perfil-placeholder" style="display:none; color:#111; background:#e8f5e9; margin-top:12px;">¡Método de pago guardado!</div>
+        </div>
+        <div class="perfil-section-view" id="view-seguridad">
+            <h2>Seguridad y Privacidad</h2>
+            <a href="/usuarios/cambiar_contrasena/" class="perfil-btn perfil-btn--secundario">Cambiar contraseña</a>
+        </div>
+        <div class="perfil-section-view" id="view-contacto">
+            <h2>Contacto</h2>
+            <div class="perfil-contacto">
+                <div><strong>Umbra</strong></div>
+                <div>Tel: <a href="tel:+521234567890">+52 123 456 7890</a></div>
+                <div>Email: <a href="mailto:umbra@umbramuebles.com">umbra@umbramuebles.com</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'usuarios/js/perfil.js' %}"></script>
+{% endblock %}

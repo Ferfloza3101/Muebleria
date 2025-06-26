@@ -7,7 +7,7 @@ class ImagenProductoInline(admin.TabularInline):
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'categoria', 'precio', 'precio_oferta', 'oferta_activa', 'activo')
+    list_display = ('nombre', 'categoria', 'precio', 'precio_oferta', 'oferta_activa', 'activo', 'ventas')
     list_filter = ('categoria', 'oferta_activa', 'activo')
     search_fields = ('nombre', 'descripcion')
     inlines = [ImagenProductoInline]

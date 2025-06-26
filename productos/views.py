@@ -24,16 +24,33 @@ product_mixin = ProductMixin()
 
 def home(request):
     """
-    Vista de inicio que muestra productos aleatorios en el carrusel.
+    Vista de inicio que muestra productos aleatorios en el carrusel y grid, y top productos.
     """
+    # Obtener productos para el carrusel (3 productos aleatorios)
     productos_aleatorios = list(Producto.objects.filter(activo=True).order_by('?')[:3])
     
-    # Preparar imágenes para cada producto
+    # Preparar imágenes para cada producto del carrusel
     for producto in productos_aleatorios:
         producto.imagenes_list = prepare_product_images(producto)
     
+    # Obtener productos para el grid (8 productos, excluyendo los del carrusel)
+    productos_carrusel_ids = [p.id for p in productos_aleatorios]
+    productos_grid = list(Producto.objects.filter(
+        activo=True
+    ).exclude(
+        id__in=productos_carrusel_ids
+    ).order_by('-ventas', '-fecha_creacion')[:8])
+
+    # Obtener top 6 productos por ventas
+    top_productos = list(Producto.objects.filter(activo=True).order_by('-ventas', '-fecha_creacion')[:6])
+    if all(p.ventas == 0 for p in top_productos):
+        # Si todos tienen 0 ventas, mostrar 6 aleatorios
+        top_productos = list(Producto.objects.filter(activo=True).order_by('?')[:6])
+    
     context = {
         'productos_carrusel': productos_aleatorios,
+        'productos_grid': productos_grid,
+        'top_productos': top_productos,
     }
     return render(request, 'inicio.html', context)
 
@@ -121,9 +138,20 @@ def eliminar_producto(request, producto_id):
 @login_required
 def ver_carrito(request):
     """
-    Vista para mostrar el carrito completo del usuario (placeholder).
+    Vista para mostrar el carrito real del usuario.
     """
-    return render(request, 'productos/ver_carrito.html', {'mensaje': 'Carrito de compras'})
+    carrito = Carrito.objects.filter(usuario=request.user).first()
+    items = []
+    total = 0
+    if carrito:
+        items = ItemCarrito.objects.filter(carrito=carrito).select_related('producto')
+        for item in items:
+            item.subtotal = item.cantidad * item.precio_unitario
+        total = sum(item.subtotal for item in items)
+    return render(request, 'productos/ver_carrito.html', {
+        'items': items,
+        'total': total,
+    })
 
 
 @login_required
@@ -197,24 +225,29 @@ def wishlist_menu_ajax(request):
 
 
 @login_required
+@require_POST
 def agregar_al_carrito(request, pk):
     """
     Vista AJAX para agregar productos al carrito.
     """
-    if request.method != 'POST':
-        return JsonResponse({'ok': False, 'error': 'Método no permitido'}, status=405)
-    
     producto = get_object_or_404(Producto, pk=pk)
     carrito = cart_mixin.get_or_create_cart(request.user)
-    
+
     try:
         cantidad = int(request.POST.get('cantidad', 1))
     except (ValueError, TypeError):
         cantidad = 1
-    
+    if cantidad < 1:
+        return JsonResponse({'ok': False, 'error': 'Cantidad inválida.'}, status=400)
+
+    stock = get_product_stock(producto)
+    item = cart_mixin.get_cart_item(carrito, producto)
+    cantidad_actual = item.cantidad if item else 0
+    if cantidad_actual + cantidad > stock:
+        return JsonResponse({'ok': False, 'error': f'Solo hay {stock} unidades disponibles.'}, status=400)
+
     cart_mixin.update_cart_item(carrito, producto, cantidad)
     total_items = get_cart_total_items(carrito)
-    
     return JsonResponse({'ok': True, 'count': total_items})
 
 
@@ -246,12 +279,11 @@ def eliminar_del_carrito(request, pk):
     """
     producto = get_object_or_404(Producto, pk=pk)
     carrito = cart_mixin.get_or_create_cart(request.user)
-    
     item = cart_mixin.get_cart_item(carrito, producto)
     if item:
         item.delete()
         total_items = get_cart_total_items(carrito)
-        return JsonResponse({'ok': True, 'count': total_items})
+        return JsonResponse({'ok': True, 'count': total_items, 'removed': True})
     else:
         return JsonResponse({'ok': False, 'error': 'Producto no está en el carrito'})
 
@@ -275,22 +307,22 @@ def disminuir_cantidad_carrito(request, pk):
     """
     producto = get_object_or_404(Producto, pk=pk)
     carrito = cart_mixin.get_or_create_cart(request.user)
-    
     item = cart_mixin.get_cart_item(carrito, producto)
     if item:
         if item.cantidad > 1:
             item.cantidad -= 1
             item.save()
+            total_items = get_cart_total_items(carrito)
+            return JsonResponse({'ok': True, 'count': total_items})
         else:
             item.delete()
-        
-        total_items = get_cart_total_items(carrito)
-        return JsonResponse({'ok': True, 'count': total_items})
+            total_items = get_cart_total_items(carrito)
+            return JsonResponse({'ok': True, 'count': total_items, 'removed': True})
     else:
         return JsonResponse({'ok': False, 'error': 'Producto no está en el carrito'})
 
 
-# Función auxiliar para el context processor (mantenida por compatibilidad)
+# Context processor para la wishlist
 def wishlist_menu_context(request):
     """
     Context processor para proporcionar datos de wishlist a todas las vistas.
