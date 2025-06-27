@@ -128,7 +128,7 @@ Contiene los estilos para la barra de navegación, el menú de favoritos (wishli
 .main-nav .nav-center ul li a:focus {
   background: none;
   color: #222222;
-  border-bottom: 2px solid #856f00;
-  box-shadow: 0 2px 8px #856f0014;
-  text-shadow: 0 1px 2px #856f001a;
+  border-bottom: 2px solid #f5f4ee1a;
+  box-shadow: 0 2px 8px #8882;
+  text-shadow: 0 1px 2px #1111;
 } 

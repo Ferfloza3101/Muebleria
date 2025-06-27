@@ -39,12 +39,6 @@ Mantiene la consistencia visual con los otros menús desplegables.
   border-bottom: 1px solid #e0e0e0;
 }
 
-.profile-avatar {
-  margin-right: 12px;
-  font-size: 32px;
-  color: #856f00;
-}
-
 .profile-info {
   flex: 1;
   min-width: 0;
@@ -91,12 +85,6 @@ Mantiene la consistencia visual con los otros menús desplegables.
   font-size: 14px;
 }
 
-.profile-menu-item:hover,
-.profile-menu-item:focus {
-  background: #f5f5f5;
-  color: #856f00;
-  outline: none;
-}
 
 .profile-menu-item i {
   width: 20px;
@@ -107,10 +95,6 @@ Mantiene la consistencia visual con los otros menús desplegables.
   transition: color 0.2s;
 }
 
-.profile-menu-item:hover i,
-.profile-menu-item:focus i {
-  color: #856f00;
-}
 
 .profile-menu-item span {
   flex: 1;
@@ -197,12 +181,12 @@ Mantiene la consistencia visual con los otros menús desplegables.
 
 /* Estados de hover mejorados */
 .nav-profile-dropdown:hover .nav-icon i {
-  color: #856f00;
+  color: #222;
 }
 
 /* Accesibilidad */
 .profile-menu-item:focus-visible {
-  outline: 2px solid #856f00;
+  outline: 2px solid #222;
   outline-offset: -2px;
 }
 
@@ -218,7 +202,7 @@ Mantiene la consistencia visual con los otros menús desplegables.
   
   .profile-menu-item {
     padding: 16px;
-    min-height: 44px; /* Tamaño mínimo para toques */
+    min-height: 44px; 
   }
   
   .profile-menu-item i {
@@ -232,17 +216,16 @@ Mantiene la consistencia visual con los otros menús desplegables.
 }
 
 .nav-profile-dropdown:hover .nav-icon i {
-  color: #856f00;
+  color: #222;
 }
 
-/* Mejora del contraste para accesibilidad */
 .profile-menu-item {
   color: #222222;
 }
 
 .profile-menu-item:hover,
 .profile-menu-item:focus {
-  color: #856f00;
+  color: #222;
   background: #f8f8f8;
 }
 
@@ -256,4 +239,10 @@ Mantiene la consistencia visual con los otros menús desplegables.
 .nav-profile-dropdown.active .nav-icon {
   background: rgba(133, 111, 0, 0.1);
   border-radius: 4px;
+}
+
+.profile-avatar {
+  margin-right: 12px;
+  font-size: 32px;
+  color: #222;
 } 

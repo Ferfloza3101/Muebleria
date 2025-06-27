@@ -12,9 +12,7 @@
   border: none;
   cursor: pointer;
   padding: 4px 6px;
-  color: #b85c38;
+  color: #555;
   font-size: 18px;
   transition: color 0.2s;
 }
-.wishlist-remove-btn:hover { color: #e74c3c; }
-.wishlist-cart-btn:hover { color: #2ecc71; } 

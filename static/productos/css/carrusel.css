@@ -74,7 +74,7 @@ Estilos para el carrusel principal de productos en la página de inicio
 }
 
 .slide-price .offer {
-    color: #ff4444;
+    color: #ffffff;
 }
 
 .slide-button {
@@ -91,7 +91,7 @@ Estilos para el carrusel principal de productos en la página de inicio
 }
 
 .slide-button:hover {
-    background-color: #856f00;
+    background-color: #000000;
     color: #ffffff;
 }
 
@@ -116,7 +116,7 @@ Estilos para el carrusel principal de productos en la página de inicio
 
 .swiper-pagination-bullet-active {
     opacity: 1 !important;
-    background: #856f00 !important;
+    background: #111 !important;
 }
 
 @media (max-width: 768px) {
@@ -124,7 +124,7 @@ Estilos para el carrusel principal de productos en la página de inicio
         height: 400px;
     }
     .slide-content {
-        background: rgba(0, 0, 0, 0.6);
+        background: #000000
     }
     .slide-info {
         padding: 1rem;

@@ -175,7 +175,7 @@
   padding: 8px 16px;
   border-radius: 4px;
   transition: box-shadow 0.18s, text-shadow 0.18s, border-bottom 0.18s;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid #222;
 }
 
 .main-nav .nav-center ul li a:hover,

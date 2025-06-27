@@ -1,6 +1,5 @@
 """
-Mixins para la aplicación de productos.
-Contiene funcionalidades comunes que se pueden reutilizar en las vistas.
+Mixins para la app de productos. Funciones comunes para usar en las vistas.
 """
 
 from django.shortcuts import get_object_or_404
@@ -11,49 +10,30 @@ from .utils import get_wishlist_ids, get_product_stock, get_cart_total_items
 
 class WishlistMixin:
     """
-    Mixin para funcionalidades relacionadas con la wishlist.
+    Funciones para la wishlist.
     """
     
     def get_wishlist_context(self, user):
         """
-        Obtiene el contexto de wishlist para las vistas.
-        
-        Args:
-            user: Usuario autenticado
-            
-        Returns:
-            dict: Contexto con wishlist_ids
+        Devuelve un diccionario con los IDs de la wishlist del usuario.
         """
         return {'wishlist_ids': get_wishlist_ids(user)}
 
 
 class CartMixin:
     """
-    Mixin para funcionalidades relacionadas con el carrito.
+    Funciones para el carrito.
     """
     
     def get_or_create_cart(self, user):
         """
-        Obtiene o crea el carrito del usuario.
-        
-        Args:
-            user: Usuario autenticado
-            
-        Returns:
-            Carrito: Instancia del carrito
+        Devuelve el carrito del usuario o lo crea si no existe.
         """
         return Carrito.objects.get_or_create(usuario=user)[0]
     
     def get_cart_item(self, carrito, producto):
         """
-        Obtiene un item del carrito.
-        
-        Args:
-            carrito: Instancia del carrito
-            producto: Instancia del producto
-            
-        Returns:
-            ItemCarrito: Item del carrito o None
+        Devuelve un item del carrito o None si no existe.
         """
         try:
             return ItemCarrito.objects.get(carrito=carrito, producto=producto)
@@ -62,15 +42,7 @@ class CartMixin:
     
     def update_cart_item(self, carrito, producto, cantidad):
         """
-        Actualiza o crea un item en el carrito.
-        
-        Args:
-            carrito: Instancia del carrito
-            producto: Instancia del producto
-            cantidad: Cantidad a agregar
-            
-        Returns:
-            tuple: (item, created)
+        Crea o actualiza un item en el carrito con la cantidad dada.
         """
         item, created = ItemCarrito.objects.get_or_create(
             carrito=carrito, 
@@ -90,18 +62,12 @@ class CartMixin:
 
 class ProductMixin:
     """
-    Mixin para funcionalidades relacionadas con productos.
+    Funciones para productos.
     """
     
     def get_product_with_stock(self, producto_id):
         """
-        Obtiene un producto con su información de stock.
-        
-        Args:
-            producto_id: ID del producto
-            
-        Returns:
-            tuple: (producto, stock)
+        Devuelve el producto y su stock.
         """
         producto = get_object_or_404(Producto, id=producto_id)
         stock = get_product_stock(producto)
@@ -109,13 +75,7 @@ class ProductMixin:
     
     def get_product_with_images(self, producto_id):
         """
-        Obtiene un producto con sus imágenes preparadas.
-        
-        Args:
-            producto_id: ID del producto
-            
-        Returns:
-            tuple: (producto, imagenes)
+        Devuelve el producto y sus imágenes listas para mostrar.
         """
         from .utils import prepare_product_images
         producto = get_object_or_404(Producto, id=producto_id)

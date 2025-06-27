@@ -4,7 +4,7 @@ Estilos para la tarjeta de producto individual, incluyendo botones de wishlist, 
 
 .wishlist-btn.active i,
 .modal-wishlist-btn.active i {
-  color: #b85c38 !important;
+  color: #111 !important;
 }
 .wishlist-btn i,
 .modal-wishlist-btn i {
@@ -12,7 +12,7 @@ Estilos para la tarjeta de producto individual, incluyendo botones de wishlist, 
 }
 .wishlist-btn:hover i,
 .modal-wishlist-btn:hover i {
-  color: #b85c38;
+  color: #555;
 }
 .product-stock, .modal-stock { margin-bottom: 8px; color: #555555; text-align: center; }
 .wishlist-btn.pop i, .modal-wishlist-btn.pop i {

@@ -192,8 +192,8 @@ body {
     --shadow-light:  rgba(0,0,0,0.1);
     --text-primary:  #333;
     --text-secondary:#777;
-    --accent:        #856f00;    
-    --hover-accent:  #ad9000;
+    --accent:        #222;    
+    --hover-accent:  var(--primary-color);
     
     --card-gap:      1rem;      
     --card-padding:  1.5rem;    
@@ -648,4 +648,29 @@ body {
     .modal-actions button {
         width: 100%;
     }
+}
+
+.categorias-list {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.categorias-list a {
+  color: var(--primary-color);
+  text-decoration: none;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: var(--accent-color);
+  transition: background 0.2s, color 0.2s;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+}
+.categorias-list a.active,
+.categorias-list a:hover {
+  background: var(--primary-color);
+  color: #fff;
+  border: 1px solid var(--primary-color);
 } 

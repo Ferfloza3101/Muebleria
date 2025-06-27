@@ -1,6 +1,8 @@
 /* 
- * Archivo principal de estilos
- * Importa todos los estilos necesarios para el proyecto
+ * main.css
+ * Este es el archivo principal de estilos del proyecto.
+ * Aquí se importan y organizan todos los estilos globales y específicos necesarios
+ * para la correcta visualización y funcionamiento de la aplicación.
  */
 
 /* Estilos base y generales */
@@ -32,7 +34,7 @@
 
 /* Variables CSS globales */
 :root {
-  --primary-color: #856f00;
+  --primary-color: #222;
   --secondary-color: #222;
   --accent-color: #f5f5f5;
   --text-color: #333;

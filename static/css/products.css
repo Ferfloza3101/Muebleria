@@ -2,11 +2,11 @@
   --card-gap: 1rem;
   --card-radius: 8px;
   --icon-offset: calc((100% - 80%) / 2 * -1);
-  --hover-color: #856f00;
+  --hover-color: var(--primary-color);
 }
 
 .products-page {
-  background-color: #f5f5f5;
+  background-color: var(--accent-color);
   padding: 2rem 0;
 }
 
@@ -18,14 +18,14 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  background-color: #f5f5f5;   
+  background-color: var(--accent-color);   
 }
 
 .product-card {
   position: relative;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: #fff;
+  border-radius: var(--card-radius);
+  box-shadow: 0 2px 4px var(--shadow-light);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   overflow: hidden;
@@ -33,7 +33,7 @@
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px var(--shadow-medium);
 }
 
 .product-name {
@@ -42,10 +42,11 @@
   text-transform: uppercase;
   margin-bottom: 0.25rem;
   text-align: center;
+  color: var(--text-color);
 }
 .product-category {
   font-size: 0.85rem;
-  color: #777;
+  color: var(--light-text);
   margin-bottom: 0.5rem;
   text-align: center;
 }
@@ -88,12 +89,12 @@
   border-radius: 50%;
   padding: 0.3rem;
   font-size: 1.2rem;
-  color: #333;
+  color: var(--primary-color);
   cursor: pointer;
   transition: background 0.2s;
 }
 .nav-arrow:hover {
-  background: #ddd;
+  background: var(--border-color);
 }
 
 .prev-arrow {
@@ -117,7 +118,7 @@
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  color: #333;
+  color: var(--primary-color);
   transition: color 0.2s;
 }
 .icon-group .action-btn:hover {
@@ -134,7 +135,7 @@
 .image-dots .dot {
   width: 5px;
   height: 5px;
-  background-color: #bbb;
+  background-color: var(--border-color);
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.2s;
@@ -153,7 +154,7 @@
 }
 .original-price {
   font-size: 0.9rem;
-  color: #999;
+  color: var(--light-text);
   text-decoration: line-through;
   margin-right: 0.5rem;
 }
@@ -165,7 +166,7 @@
 .price {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #333;
+  color: var(--primary-color);
 }
 
 @media (max-width: 480px) {
@@ -205,13 +206,13 @@
 
 .modal-content {
   position: relative;
-  background-color: white;
+  background-color: #fff;
   margin: 5% auto;
   padding: 20px;
   width: 90%;
   max-width: 1000px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 20px var(--shadow-medium);
 }
 
 .close-modal {
@@ -220,13 +221,13 @@
   top: 15px;
   font-size: 28px;
   font-weight: bold;
-  color: #666;
+  color: var(--light-text);
   cursor: pointer;
   z-index: 1;
 }
 
 .close-modal:hover {
-  color: #000;
+  color: var(--primary-color);
 }
 
 .modal-product-details {
@@ -263,6 +264,7 @@
   border-radius: 50%;
   cursor: pointer;
   z-index: 2;
+  color: var(--primary-color);
 }
 
 .modal-nav-arrow.prev-arrow {
@@ -284,12 +286,12 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ccc;
+  background: var(--border-color);
   cursor: pointer;
 }
 
 .modal-dot.active {
-  background: #333;
+  background: var(--primary-color);
 }
 
 .modal-info {
@@ -299,11 +301,11 @@
 .modal-product-name {
   font-size: 24px;
   margin-bottom: 10px;
-  color: #333;
+  color: var(--primary-color);
 }
 
 .modal-product-category {
-  color: #666;
+  color: var(--light-text);
   font-size: 16px;
   margin-bottom: 20px;
 }
@@ -311,7 +313,7 @@
 .modal-product-description {
   margin: 20px 0;
   line-height: 1.6;
-  color: #444;
+  color: var(--text-color);
 }
 
 .modal-product-pricing {
@@ -320,12 +322,12 @@
 
 .modal-original-price {
   text-decoration: line-through;
-  color: #999;
+  color: var(--light-text);
   margin-right: 10px;
 }
 
 .modal-sale-price {
-  color: #e44d26;
+  color: var(--primary-color);
   font-size: 24px;
   font-weight: bold;
 }
@@ -333,7 +335,7 @@
 .modal-price {
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: var(--primary-color);
 }
 
 .modal-actions {
@@ -356,21 +358,21 @@
 }
 
 .modal-wishlist-btn {
-  background-color: #f8f9fa;
-  color: #333;
+  background-color: var(--accent-color);
+  color: var(--primary-color);
 }
 
 .modal-cart-btn {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--primary-color);
+  color: #fff;
 }
 
 .modal-wishlist-btn:hover {
-  background-color: #e9ecef;
+  background-color: var(--border-color);
 }
 
 .modal-cart-btn:hover {
-  background-color: #0056b3;
+  background-color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {

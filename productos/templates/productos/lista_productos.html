@@ -9,12 +9,14 @@
 
 {% block content %}
 <div class="products-page">
-    <div class="products-grid">
-        {% for producto in productos %}
-            {% include 'productos/tarjeta_producto.html' with producto=producto wishlist_ids=wishlist_ids %}
-        {% empty %}
-            <p class="no-products">No hay productos disponibles.</p>
+    <div class="categorias-list">
+        <a href="#" data-categoria="" class="{% if not categoria_actual %}active{% endif %}">Ver todos los muebles</a>
+        {% for cat in categorias %}
+            <a href="#" data-categoria="{{ cat.slug }}" class="{% if categoria_actual == cat.slug %}active{% endif %}">{{ cat.nombre }}</a>
         {% endfor %}
+    </div>
+    <div id="productos-grid-container">
+        {% include 'productos/partials/grid_productos.html' %}
     </div>
 </div>
 
@@ -25,5 +27,6 @@
 
 {% block extra_js %}
 <script src="{% static 'productos/js/productos_modal_trigger.js' %}"></script>
+<script src="{% static 'productos/js/filtrado_categorias.js' %}"></script>
 {% endblock %}
 {% endblock %} 

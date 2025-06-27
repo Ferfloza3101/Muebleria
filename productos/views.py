@@ -55,11 +55,14 @@ def home(request):
     return render(request, 'inicio.html', context)
 
 
-def lista_productos(request):
+def lista_productos(request, categoria_slug=None):
     """
     Vista para listar productos con filtros por categoría y búsqueda.
     """
-    categoria_slug = request.GET.get('categoria')
+    # Si no viene en los parámetros de URL, intentar obtenerlo de GET
+    if categoria_slug is None:
+        categoria_slug = request.GET.get('categoria')
+    
     query = request.GET.get('q')
     productos = Producto.objects.filter(activo=True)
     categorias = Categoria.objects.all()
@@ -232,7 +235,7 @@ def agregar_al_carrito(request, pk):
     """
     producto = get_object_or_404(Producto, pk=pk)
     carrito = cart_mixin.get_or_create_cart(request.user)
-
+    
     try:
         cantidad = int(request.POST.get('cantidad', 1))
     except (ValueError, TypeError):
@@ -245,7 +248,7 @@ def agregar_al_carrito(request, pk):
     cantidad_actual = item.cantidad if item else 0
     if cantidad_actual + cantidad > stock:
         return JsonResponse({'ok': False, 'error': f'Solo hay {stock} unidades disponibles.'}, status=400)
-
+    
     cart_mixin.update_cart_item(carrito, producto, cantidad)
     total_items = get_cart_total_items(carrito)
     return JsonResponse({'ok': True, 'count': total_items})
@@ -331,3 +334,22 @@ def wishlist_menu_context(request):
         wishlist, _ = Wishlist.objects.get_or_create(usuario=request.user)
         return {'wishlist_menu': wishlist}
     return {'wishlist_menu': None}
+
+
+@require_GET
+def filtrado_productos_ajax(request):
+    categoria_slug = request.GET.get('categoria')
+    query = request.GET.get('q')
+    productos = Producto.objects.filter(activo=True)
+    if categoria_slug:
+        categoria = get_object_or_404(Categoria, slug=categoria_slug)
+        productos = productos.filter(categoria=categoria)
+    if query:
+        productos = productos.filter(nombre__icontains=query)
+    categorias = Categoria.objects.all()
+    wishlist_context = wishlist_mixin.get_wishlist_context(request.user)
+    html = render_to_string('productos/partials/grid_productos.html', {
+        'productos': productos,
+        'wishlist_ids': wishlist_context.get('wishlist_ids', []),
+    }, request=request)
+    return JsonResponse({'html': html})
